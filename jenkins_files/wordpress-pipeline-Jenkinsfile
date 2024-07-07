@@ -7,27 +7,11 @@ pipeline {
                 script {
                     sh 'curl -s "https://get.sdkman.io" | bash'
                     sh 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
-                }
-            }
-        }
-
-        stage('Install Groovy') {
-            steps {
-                script {
-                    sh 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
                     sh 'sdk install groovy'
-                }
-            }
-        }
-
-        stage('Verify Groovy Installation') {
-            steps {
-                script {
                     sh 'groovy -version'
                 }
             }
         }
-
         // Add more stages here as needed
     }
 }
