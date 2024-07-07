@@ -1,35 +1,32 @@
 pipeline {
-  agent {
-    node {
-      label "master"
-    }
-  }
+    agent any
 
-  environment {
-    DATABASE_HOTSNAME = 'db'
-    DATABASE_CONTAINER_NAME = 'mysql-database'
-    WORDPRESS_HOSTNAME = 'wordpress'
-    WORDPRESS_CONTAINER_NAME = 'wordpress-container'
-    WORDPRESS_PORT = '8080'
-  }
+    stages {
+        stage('Install SDKMAN!') {
+            steps {
+                script {
+                    sh 'curl -s "https://get.sdkman.io" | bash'
+                    sh 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
+                }
+            }
+        }
 
-  stages {
-    stage('Build') {
-      steps {
-        sh '''
-            sudo yum update -y
-            curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
-            export JAVA_HOME="/usr/bin/java"
-            groovy docker-compose.groovy >> docker-compose.yaml
-          '''
-      }
+        stage('Install Groovy') {
+            steps {
+                script {
+                    sh 'sdk install groovy'
+                }
+            }
+        }
+
+        stage('Verify Groovy Installation') {
+            steps {
+                script {
+                    sh 'groovy -version'
+                }
+            }
+        }
+
+        // Add more stages here as needed
     }
-    stage('Deploy') {
-      steps {
-          sh '''
-              ansible-playbook wordpress-starter.yaml
-            '''
-      }
-    }
-  }
 }
