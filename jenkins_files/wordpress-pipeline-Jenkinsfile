@@ -5,10 +5,12 @@ pipeline {
         stage('Install SDKMAN!') {
             steps {
                 script {
-                    sh 'curl -s "https://get.sdkman.io" | bash'
-                    sh 'source "$HOME/.sdkman/bin/sdkman-init.sh"'
-                    sh 'sdk install groovy'
-                    sh 'groovy -version'
+                    sh '''   
+                        curl -s "https://get.sdkman.io" | bash'
+                        source "$HOME/.sdkman/bin/sdkman-init.sh"
+                        sdk install groovy
+                        groovy -version
+                    '''
                 }
             }
         }
