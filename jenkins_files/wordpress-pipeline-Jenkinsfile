@@ -5,12 +5,28 @@ pipeline {
     }
   }
 
+  envoronment {
+    DATABASE_HOTSNAME = 'db'
+    DATABASE_CONTAINER_NAME = 'mysql-database'
+    WORDPRESS_HOSTNAME = 'wordpress'
+    WORDPRESS_CONTAINER_NAME = 'wordpress-container'
+    WORDPRESS_PORT = '8080'
+  }
+
   stages {
     stage('Build') {
       steps {
         sh '''
             sudo yum update -y
-            
+            curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
+            groovy docker-compose.groovy >> docker-compose.yaml
+          '''
+      }
+    }
+    stage('Create containers') {
+      steps {
+        sh '''
+            docker-compose up
           '''
       }
     }
