@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+        $database_hostname:
+                container_name: $database_container_name
+                image: mysql:latest
+                environment:
+                        MYSQL_ROOT_PASSWORD: secret
+                        MYSQL_DATABASE: wordpress-database
+                        MYSQL_USER: wordpress
+                        MYSQL_PASSWORD: wordpress-secret
+                volumes:
+                        - wordpress-database-volume:/var/lib/mysql
+
+        $wordpress_hostname:
+                depends_on:
+                        - $database_hostname
+                container_name: $wordpress_container_name
+                image: wordpress:latest
+                ports:
+                        - "$wordpress_port:80"
+                environment:
+                        WORDPRESS_DB_HOST: db:3306
+                        WORDPRESS_DB_NAME: wordpress-database
+                        WORDPRESS_DB_USER: wordpress
+                        WORDPRESS_DB_PASSWORD: wordpress-secret
+                volumes:
+                        - wordpress-volume:/var/www/html/wp-content
+
+volumes:
+        wordpress-database-volume:
+        wordpress-volume:
