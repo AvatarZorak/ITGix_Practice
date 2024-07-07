@@ -1,11 +1,11 @@
 pipeline {
   agent {
     node {
-      label: "Built-In Node"
+      label "Built-In Node"
     }
   }
 
-  envoronment {
+  environment {
     DATABASE_HOTSNAME = 'db'
     DATABASE_CONTAINER_NAME = 'mysql-database'
     WORDPRESS_HOSTNAME = 'wordpress'
@@ -14,7 +14,7 @@ pipeline {
   }
 
   stages {
-    stage('Build') {
+    stage('Deploy') {
       steps {
         sh '''
             sudo yum update -y
