@@ -23,5 +23,12 @@ pipeline {
           '''
       }
     }
+    stage('Stage') {
+      steps {
+          sh '''
+              ansible-playbook wordpress-starter.yaml
+            '''
+      }
+    }
   }
 }
