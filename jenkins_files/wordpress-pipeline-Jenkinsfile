@@ -14,17 +14,17 @@ pipeline {
   }
 
   stages {
-    stage('Deploy') {
+    stage('Build') {
       steps {
         sh '''
             sudo yum update -y
             curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
-            export JAVA_HOME="/usr/bin/java"
+            sudo su ansible
             groovy docker-compose.groovy >> docker-compose.yaml
           '''
       }
     }
-    stage('Stage') {
+    stage('Deploy') {
       steps {
           sh '''
               ansible-playbook wordpress-starter.yaml
