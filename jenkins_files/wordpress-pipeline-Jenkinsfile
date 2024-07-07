@@ -19,6 +19,7 @@ pipeline {
         sh '''
             sudo yum update -y
             curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
+            export JAVA_HOME="/usr/bin/java"
             groovy docker-compose.groovy >> docker-compose.yaml
           '''
       }
