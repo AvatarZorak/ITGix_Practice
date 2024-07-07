@@ -19,7 +19,7 @@ pipeline {
         sh '''
             sudo yum update -y
             curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
-            sudo runuser ansible -c 'export JAVA_HOME="/usr" && /home/ansible/.sdkman/candidates/groovy/current/bin/groovy /home/ansible/wordpress-project/docker-compose.groovy >> home/ansible/wordpress-project/docker-compose.yaml'
+            sudo runuser ansible -c 'export JAVA_HOME="/usr" && /home/ansible/.sdkman/candidates/groovy/current/bin/groovy /home/ansible/wordpress-project/docker-compose.groovy >> /home/ansible/wordpress-project/docker-compose.yaml'
           '''
       }
     }
