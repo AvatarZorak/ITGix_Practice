@@ -1,19 +1,34 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Install SDKMAN!') {
-            steps {
-                script {
-                    sh '''   
-                        curl -s "https://get.sdkman.io" | bash
-                        source "$HOME/.sdkman/bin/sdkman-init.sh"
-                        sdk install groovy
-                        groovy -version
-                    '''
-                }
-            }
-        }
-        // Add more stages here as needed
+  agent {
+    node {
+      label "master"
     }
+  }
+
+  environment {
+    DATABASE_HOTSNAME = 'db'
+    DATABASE_CONTAINER_NAME = 'mysql-database'
+    WORDPRESS_HOSTNAME = 'wordpress'
+    WORDPRESS_CONTAINER_NAME = 'wordpress-container'
+    WORDPRESS_PORT = '8080'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh '''
+            sudo yum update -y
+            curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
+            sudo runuser ansible -c 'export JAVA_HOME="/usr" && /home/ansible/.sdkman/candidates/groovy/current/bin/groovy /home/ansible/wordpress-project/docker-compose.groovy >> home/ansible/wordpress-project/docker-compose.yaml'
+          '''
+      }
+    }
+    stage('Deploy') {
+      steps {
+          sh '''
+              ansible-playbook wordpress-starter.yaml
+            '''
+      }
+    }
+  }
 }
