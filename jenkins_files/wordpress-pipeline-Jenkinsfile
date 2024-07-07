@@ -21,6 +21,7 @@ pipeline {
             curl https://raw.githubusercontent.com/AvatarZorak/ITGix_Practice/main/template/wordpress-docker-compose.template -o docker-compose.template
             curl -s https://get.sdkman.io | bash
             source "$HOME/.sdkman/bin/sdkman-init.sh"
+            groovy --version
             sdk install groovy
             export JAVA_HOME="/usr/bin/java"
             groovy docker-compose.groovy >> docker-compose.yaml
