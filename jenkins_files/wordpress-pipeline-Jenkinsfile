@@ -23,12 +23,5 @@ pipeline {
           '''
       }
     }
-    stage('Create containers') {
-      steps {
-        sh '''
-            docker-compose up
-          '''
-      }
-    }
   }
 }
