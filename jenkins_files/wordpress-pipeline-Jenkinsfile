@@ -1,0 +1,18 @@
+pipeline {
+  agent {
+    node {
+      label: "Built-In Node"
+    }
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh '''
+            sudo yum update -y
+            
+          '''
+      }
+    }
+  }
+}
